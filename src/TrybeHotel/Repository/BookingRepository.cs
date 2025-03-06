@@ -71,6 +71,7 @@ namespace TrybeHotel.Repository
                         Address = booking.Room.Hotel.Address,
                         CityId = booking.Room.Hotel.CityId,
                         CityName = booking.Room.Hotel.City!.Name,
+                        State = booking.Room.Hotel.City.State,
                     }
                 }
             }).First();
