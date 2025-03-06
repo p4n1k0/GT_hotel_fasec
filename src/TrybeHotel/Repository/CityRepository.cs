@@ -18,6 +18,7 @@ namespace TrybeHotel.Repository
             {
                 CityId = city.CityId,
                 Name = city.Name,
+                State = city.State,
             }).ToList();
         }
 
@@ -31,6 +32,7 @@ namespace TrybeHotel.Repository
             {
                 CityId = city.CityId,
                 Name = city.Name,
+                State = city.State,
             };
         }
 
