@@ -3,6 +3,7 @@ using TrybeHotel.Models;
 using TrybeHotel.Repository;
 using TrybeHotel.Dto;
 using TrybeHotel.Services;
+using Microsoft.AspNetCore.Server.IIS;
 
 namespace TrybeHotel.Controllers
 {
@@ -19,8 +20,17 @@ namespace TrybeHotel.Controllers
         }
 
         [HttpPost]
-        public IActionResult Login([FromBody] LoginDto login){
-           throw new NotImplementedException();
+        public IActionResult Login([FromBody] LoginDto login)
+        {
+            try
+            {
+                var token = new TokenGenerator().Generate(_repository.Login(login));
+                return Ok(new { token });
+            }
+            catch (Exception e)
+            {
+                return Unauthorized(new { message = e.Message });
+            }
         }
     }
 }
