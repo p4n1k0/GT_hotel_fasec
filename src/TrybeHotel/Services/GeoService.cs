@@ -24,13 +24,42 @@ namespace TrybeHotel.Services
         // 12. Desenvolva o endpoint GET /geo/address
         public async Task<GeoDtoResponse> GetGeoLocation(GeoDto geoDto)
         {
-            throw new NotImplementedException();
+            var response = await _client.GetAsync($"search?street={geoDto.Address}&city={geoDto.City}&country=Brazil&state={geoDto.State}&format=json&limit=1");
+            var content = await response.Content.ReadFromJsonAsync<GeoDtoResponse[]>();
+
+            return new GeoDtoResponse
+            {
+                Lat = content![0].Lat,
+                Lon = content![0].Lon,
+            };
         }
 
         // 12. Desenvolva o endpoint GET /geo/address
         public async Task<List<GeoDtoHotelResponse>> GetHotelsByGeo(GeoDto geoDto, IHotelRepository repository)
         {
-            throw new NotImplementedException();
+            var location = await GetGeoLocation(geoDto);
+            var response = new List<GeoDtoHotelResponse>();
+
+            foreach (var hotel in repository.GetHotels())
+            {
+                var getLocation = await GetGeoLocation(new GeoDto()
+                {
+                    Address = hotel.Address,
+                    City = hotel.CityName,
+                    State = hotel.State,
+                });
+
+                response.Add(new GeoDtoHotelResponse()
+                {
+                    HotelId = hotel.HotelId,
+                    Name = hotel.Name,
+                    Address = hotel.Address,
+                    CityName = hotel.CityName,
+                    State = hotel.State,
+                    Distance = CalculateDistance(location.Lat!, location.Lon!, location.Lat!, getLocation.Lon!),
+                });
+            }
+            return response;
         }
 
 
