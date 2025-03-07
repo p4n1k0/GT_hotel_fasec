@@ -1,9 +1,7 @@
 using Microsoft.AspNetCore.Mvc;
-using TrybeHotel.Models;
 using TrybeHotel.Repository;
 using TrybeHotel.Dto;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
 
 namespace TrybeHotel.Controllers
 {
@@ -32,9 +30,9 @@ namespace TrybeHotel.Controllers
             {
                 return Created("", _repository.Add(user));
             }
-            catch (InvalidOperationException ex)
+            catch (InvalidOperationException e)
             {
-                return Conflict(new { message = ex.Message });
+                return Conflict(new { message = e.Message });
             }
         }
     }

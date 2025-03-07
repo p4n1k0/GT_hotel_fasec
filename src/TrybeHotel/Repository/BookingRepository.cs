@@ -41,8 +41,7 @@ namespace TrybeHotel.Repository
             if (_context.Users.Select(user => new { user.Email, user.UserId})
             .First(user => user.Email == email).UserId != _context.Bookings
             .Select(booking => new { booking.BookingId, booking.UserId})
-            .First(booking => booking.BookingId == bookingId)
-            .UserId)
+            .First(booking => booking.BookingId == bookingId).UserId)
             {
                 throw new UnauthorizedAccessException();
             }

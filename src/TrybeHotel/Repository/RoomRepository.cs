@@ -38,7 +38,6 @@ namespace TrybeHotel.Repository
         {
             _context.Rooms.Add(room);
             _context.SaveChanges();
-
             return _context.Rooms.Where(r => r.Name == room.Name)
             .Select(r => new RoomDto
             {

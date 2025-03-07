@@ -1,4 +1,3 @@
-using System.Net.Http;
 using TrybeHotel.Dto;
 using TrybeHotel.Repository;
 
@@ -16,21 +15,17 @@ namespace TrybeHotel.Services
         // 11. Desenvolva o endpoint GET /geo/status
         public async Task<object> GetGeoStatus()
         {
-            var url = await _client.GetAsync("status.php?format=json");
-            var response = await url.Content.ReadFromJsonAsync<object>();
-            return response!;
+            return (await (await _client.GetAsync("status.php?format=json")).Content.ReadFromJsonAsync<object>())!;
         }
 
         // 12. Desenvolva o endpoint GET /geo/address
         public async Task<GeoDtoResponse> GetGeoLocation(GeoDto geoDto)
         {
-            var response = await _client.GetAsync($"search?street={geoDto.Address}&city={geoDto.City}&country=Brazil&state={geoDto.State}&format=json&limit=1");
-            var content = await response.Content.ReadFromJsonAsync<GeoDtoResponse[]>();
-
+            var response = await (await _client.GetAsync($"search?street={geoDto.Address}&city={geoDto.City}&country=Brazil&state={geoDto.State}&format=json&limit=1")).Content.ReadFromJsonAsync<GeoDtoResponse[]>();
             return new GeoDtoResponse
             {
-                Lat = content![0].Lat,
-                Lon = content![0].Lon,
+                Lat = response![0].Lat,
+                Lon = response![0].Lon,
             };
         }
 
@@ -42,14 +37,14 @@ namespace TrybeHotel.Services
 
             foreach (var hotel in repository.GetHotels())
             {
-                var getLocation = await GetGeoLocation(new GeoDto()
+                var getLocation = await GetGeoLocation(new GeoDto
                 {
                     Address = hotel.Address,
                     City = hotel.CityName,
                     State = hotel.State,
                 });
 
-                response.Add(new GeoDtoHotelResponse()
+                response.Add(new GeoDtoHotelResponse
                 {
                     HotelId = hotel.HotelId,
                     Name = hotel.Name,
