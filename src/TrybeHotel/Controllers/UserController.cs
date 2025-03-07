@@ -30,9 +30,9 @@ namespace TrybeHotel.Controllers
             {
                 return Created("", _repository.Add(user));
             }
-            catch (InvalidOperationException e)
+            catch (Exception)
             {
-                return Conflict(new { message = e.Message });
+                return Conflict();
             }
         }
     }

@@ -39,7 +39,7 @@ namespace TrybeHotel.Repository
         }
         public UserDto Add(UserDtoInsert user)
         {
-            if (!_context.Users.Any(u => u.Email == user.Email))
+            if (_context.Users.Any(u => u.Email == user.Email) == false)
             {
                 var newUser = new User
                 {

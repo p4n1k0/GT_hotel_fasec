@@ -122,14 +122,6 @@ public class IntegrationTest : IClassFixture<WebApplicationFactory<Program>>
     [InlineData("/hotel")]
     public async Task TestPostHotel(string url)
     {
-        _clientTest.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", new TokenGenerator().Generate(new UserDto
-        {
-            UserId = 1,
-            Name = "Ana",
-            Email = "ana@trybehotel.com",
-            UserType = "admin",
-        }));
-
         var response = await _clientTest.PostAsync(url, new StringContent(JsonConvert.SerializeObject(new Hotel
         {
             Name = "Marrocos",

@@ -1,9 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
-using TrybeHotel.Models;
 using TrybeHotel.Repository;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Authentication.JwtBearer;
-using Microsoft.AspNetCore.Http;
 using System.Security.Claims;
 using TrybeHotel.Dto;
 
@@ -29,9 +26,9 @@ namespace TrybeHotel.Controllers
                 return StatusCode(201, _repository.Add(bookingInsert, (HttpContext.User.Identity as ClaimsIdentity)!
                 .Claims.First(claim => claim.Type == ClaimTypes.Email).Value));
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return BadRequest(new { message = e.Message });
+                return BadRequest();
             }
         }
 

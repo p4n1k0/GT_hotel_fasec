@@ -1,5 +1,4 @@
 using TrybeHotel.Models;
-using TrybeHotel.Dto;
 
 namespace TrybeHotel.Repository
 {

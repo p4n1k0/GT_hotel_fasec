@@ -25,9 +25,9 @@ namespace TrybeHotel.Controllers
                 var token = new TokenGenerator().Generate(_repository.Login(login));
                 return Ok(new { token });
             }
-            catch (Exception e)
+            catch (Exception)
             {
-                return Unauthorized(new { message = e.Message });
+                return Unauthorized();
             }
         }
     }

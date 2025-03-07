@@ -26,8 +26,7 @@ namespace TrybeHotel.Repository
                 GuestQuant = booking.GuestQuant,
                 UserId = _context.Users
                 .Select(user => new { user.Email, user.UserId })
-                .First(user => user.Email == email).UserId,
-                RoomId = booking.RoomId,
+                .First(user => user.Email == email).UserId, RoomId = booking.RoomId,
             };
 
             _context.Bookings.Add(entity);
