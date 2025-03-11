@@ -1,7 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using TrybeHotel.Models;
 using TrybeHotel.Repository;
-using Microsoft.Extensions.DependencyInjection;
 
 namespace TrybeHotel.Test;
 
